@@ -7,6 +7,7 @@ import java.util.Arrays;
  */
 public class ArrayQueue {
 
+
     Object [] array;
     int size;
 
