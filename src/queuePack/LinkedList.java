@@ -9,23 +9,20 @@ public class LinkedList implements List {
     @Override
     public void add(Object value) {
         Node newNode = new Node(value);
-        //System.out.println(newNode);
         if(size == 0){
             head = tail = newNode;
-            //System.out.println(head + " " + tail);
-        } else {
+        }else{
             tail.next = newNode;
-            //System.out.println("tail.next " + tail.next);
             newNode.prev = tail;
-            //System.out.println("newNode.prev "+ newNode.prev);
             tail = newNode;
-            //System.out.println("tail " + tail);
         }
-        size++;
+        size ++;
     }
 
     @Override
     public void add(Object value, int index) {
+        checkIndex(index);
+
 
     }
 
@@ -36,10 +33,20 @@ public class LinkedList implements List {
 
     @Override
     public Object get(int index) {
+        checkIndex(index);
+        //TODO если index > size 1/2 начать поиск с конца
         Node currentNode = head;
-        
+        for (int i = 0; i < index; i++){
+            currentNode = currentNode.next;
+        }
 
-        return null;
+        return currentNode;
+    }
+
+    private void checkIndex(int index){
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index: " + index + " size: " + size);
+        }
     }
 
     @Override
@@ -75,5 +82,25 @@ public class LinkedList implements List {
     @Override
     public int lastIndexOf(Object value) {
         return 0;
+    }
+
+    //TODO реализовать Iterator
+
+    private static class Node {
+
+        Object value;
+        Node next;
+        Node prev;
+
+        Node (Object value){
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return "Node{" +
+                    "value=" + value +
+                    '}';
+        }
     }
 }
