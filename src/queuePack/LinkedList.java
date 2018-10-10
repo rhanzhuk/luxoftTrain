@@ -22,8 +22,23 @@ public class LinkedList implements List {
     @Override
     public void add(Object value, int index) {
         checkIndex(index);
+        Node newNode = new Node(value);
+//1.case if index == size
+        if(index == size){
+            add(value);
+//2.case if in index == 0
+        }else if (index == 0){
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+//3.case insert to middle
+        }else {
+            //TODO insert to middle
+        }
 
 
+
+        size++;
     }
 
     @Override

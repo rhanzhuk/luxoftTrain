@@ -18,7 +18,7 @@ public class LinkedList<E> implements List<E>, Iterable {
         }
 
         @Override
-        public Object next() {
+        public E next() {
             count++;
             return get(count-1);
         }
