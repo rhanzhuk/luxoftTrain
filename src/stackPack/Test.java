@@ -4,6 +4,7 @@ package stackPack;
  * Created by dsk15 on 10/10/2018.
  */
 public class Test {
+    //gg
 
     public static void main(String[] args) {
         LinkedList<String> linkedList = new LinkedList<>();
