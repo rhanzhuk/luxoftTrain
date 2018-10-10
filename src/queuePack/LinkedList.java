@@ -50,19 +50,44 @@ public class LinkedList implements List {
 
     @Override
     public Object remove(int index) {
-        return null;
+        checkIndex(index);
+        Node removeNode = (Node) get(index);
+//1 case remove from start list
+        if (index == 0){
+            head = removeNode.next;
+//2 case remove from finish list
+        } else if (index == size-1){
+            tail = removeNode.prev;
+            removeNode.prev = null;
+//3 case remove from middle list
+        }else {
+            removeNode.next.prev = removeNode.prev;
+            removeNode.prev.next = removeNode.next;
+        }
+        size--;
+        return removeNode.value;
     }
 
     @Override
     public Object get(int index) {
         checkIndex(index);
-        //TODO если index > size 1/2 начать поиск с конца
-        Node currentNode = head;
-        for (int i = 0; i < index; i++){
-            currentNode = currentNode.next;
-        }
+        Node currentNode;
+        if (index < size /2){
+             currentNode = head;
+            for (int i = 0; i < index; i++){
+                currentNode = currentNode.next;
+                //System.out.println("start: " + currentNode);
+            }
 
-        return currentNode;
+            return currentNode;
+        }else {
+             currentNode = tail;
+            for (int i = size - 1; i > index; i--) {
+                currentNode = currentNode.prev;
+                //System.out.println("finish: " + currentNode);
+            }
+            return currentNode;
+        }
     }
 
     private void checkIndex(int index){
