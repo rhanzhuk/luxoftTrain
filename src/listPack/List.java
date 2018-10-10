@@ -1,4 +1,4 @@
-package queuePack;
+package listPack;
 
 /**
  * Created by dsk15 on 10/8/2018.
