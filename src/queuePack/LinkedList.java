@@ -1,5 +1,7 @@
 package queuePack;
 
+import listPack.List;
+
 public class LinkedList implements List {
 
     int size;
@@ -33,7 +35,12 @@ public class LinkedList implements List {
             head = newNode;
 //3.case insert to middle
         }else {
-            //TODO insert to middle
+            Node currentNode = (Node) get(index);
+            Node prevNode = (Node) get(index - 1);
+            prevNode.next = newNode;
+            newNode.prev = prevNode;
+            newNode.next = currentNode;
+            currentNode.prev = newNode;
         }
 
 
@@ -76,12 +83,12 @@ public class LinkedList implements List {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
