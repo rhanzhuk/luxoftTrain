@@ -48,7 +48,6 @@ public class HashMap<K, V> implements Map<K, V> {
         newEntry = new Entry<K, V>(key, value);
         bucket.add(newEntry);
         size++;
-        //TODO check this вернуть текущее значение
         return newEntry.value;
     }
 
@@ -72,7 +71,12 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        V value = get(key);
+        if (value != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
