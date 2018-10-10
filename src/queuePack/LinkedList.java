@@ -98,12 +98,16 @@ public class LinkedList implements List {
 
     @Override
     public Object set(Object value, int index) {
-        return null;
+         Object oldObject = get(index);
+         Node updateObject = (Node) get(index);
+         updateObject.value = value;
+        return oldObject;
     }
 
     @Override
     public void clear() {
-
+        head = tail = null;
+        size = 0;
     }
 
     @Override
@@ -118,12 +122,19 @@ public class LinkedList implements List {
 
     @Override
     public boolean contains(Object value) {
-        return false;
+        return indexOf(value) != -1;
     }
 
     @Override
     public int indexOf(Object value) {
-        return 0;
+        Node currentNode = head;
+        for(int i = 0; i < size; i++) {
+            if(currentNode.value == value) {
+                return i;
+            }
+            currentNode = currentNode.next;
+        }
+        return -1;
     }
 
     @Override
