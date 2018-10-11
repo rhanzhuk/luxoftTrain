@@ -1,19 +1,18 @@
-package queuePack;
+package listPack;
 
-import java.util.Arrays;
-import java.util.Objects;
+import listPack.List;
 
 /**
  * Created by dsk15 on 10/8/2018.
  */
 
-public class MyArrayList implements queuePack.List {
+public class MyArrayList implements List {
 
     private int size;
     public static final int START_SIZE = 5;
     private Object [] array;
 
-    MyArrayList(){
+    public MyArrayList(){
         array = new Object[START_SIZE];
     }
     @Override

@@ -1,5 +1,7 @@
 package queuePack;
 
+import listPack.List;
+
 public class LinkedList implements List {
 
     int size;
@@ -33,7 +35,12 @@ public class LinkedList implements List {
             head = newNode;
 //3.case insert to middle
         }else {
-            //TODO insert to middle
+            Node currentNode = (Node) get(index);
+            Node prevNode = (Node) get(index - 1);
+            prevNode.next = newNode;
+            newNode.prev = prevNode;
+            newNode.next = currentNode;
+            currentNode.prev = newNode;
         }
 
 
@@ -43,19 +50,44 @@ public class LinkedList implements List {
 
     @Override
     public Object remove(int index) {
-        return null;
+        checkIndex(index);
+        Node removeNode = (Node) get(index);
+//1 case remove from start list
+        if (index == 0){
+            head = removeNode.next;
+//2 case remove from finish list
+        } else if (index == size-1){
+            tail = removeNode.prev;
+            removeNode.prev = null;
+//3 case remove from middle list
+        }else {
+            removeNode.next.prev = removeNode.prev;
+            removeNode.prev.next = removeNode.next;
+        }
+        size--;
+        return removeNode.value;
     }
 
     @Override
     public Object get(int index) {
         checkIndex(index);
-        //TODO если index > size 1/2 начать поиск с конца
-        Node currentNode = head;
-        for (int i = 0; i < index; i++){
-            currentNode = currentNode.next;
-        }
+        Node currentNode;
+        if (index < size /2){
+             currentNode = head;
+            for (int i = 0; i < index; i++){
+                currentNode = currentNode.next;
+                //System.out.println("start: " + currentNode);
+            }
 
-        return currentNode;
+            return currentNode;
+        }else {
+             currentNode = tail;
+            for (int i = size - 1; i > index; i--) {
+                currentNode = currentNode.prev;
+                //System.out.println("finish: " + currentNode);
+            }
+            return currentNode;
+        }
     }
 
     private void checkIndex(int index){
@@ -66,32 +98,43 @@ public class LinkedList implements List {
 
     @Override
     public Object set(Object value, int index) {
-        return null;
+         Object oldObject = get(index);
+         Node updateObject = (Node) get(index);
+         updateObject.value = value;
+        return oldObject;
     }
 
     @Override
     public void clear() {
-
+        head = tail = null;
+        size = 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public boolean contains(Object value) {
-        return false;
+        return indexOf(value) != -1;
     }
 
     @Override
     public int indexOf(Object value) {
-        return 0;
+        Node currentNode = head;
+        for(int i = 0; i < size; i++) {
+            if(currentNode.value == value) {
+                return i;
+            }
+            currentNode = currentNode.next;
+        }
+        return -1;
     }
 
     @Override

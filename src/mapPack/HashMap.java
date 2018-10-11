@@ -6,8 +6,8 @@ import java.util.List;
 public class HashMap<K, V> implements Map<K, V> {
 
     private int size;
-    private static int BUCKET_SIZE = 3;
-    private List<Entry<K, V>>[] buckets = (List<Entry<K, V>>[]) new ArrayList[BUCKET_SIZE];
+    private int startSize = 3;
+    private List<Entry<K, V>>[] buckets = (List<Entry<K, V>>[]) new ArrayList[startSize];
 
     public HashMap() {
         for (int i = 0; i < buckets.length; i++) {
@@ -18,6 +18,10 @@ public class HashMap<K, V> implements Map<K, V> {
     @Override
     public V put(K key, V value) {
         int index = getIndex(key);
+        //TODO добавить check на добавление
+        if (checkSizeWithBucket()){
+            buckets = addNewBuckets();
+        }
         List<Entry<K, V>> bucket = buckets[index];
         Entry<K, V> newEntry;
         for (int i = 0; i < bucket.size(); i++) {
@@ -48,7 +52,6 @@ public class HashMap<K, V> implements Map<K, V> {
         newEntry = new Entry<K, V>(key, value);
         bucket.add(newEntry);
         size++;
-        //TODO check this вернуть текущее значение
         return newEntry.value;
     }
 
@@ -72,13 +75,32 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        V value = get(key);
+        if (value != null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
     public int getIndex(K key) {
-        int index = Math.abs(key.hashCode()) % buckets.length;
+        int index = Math.abs(key.hashCode() % buckets.length);
         return index;
+    }
+
+    public List<Entry<K, V>>[] addNewBuckets(){
+            int newSize = startSize *2;
+           List<Entry<K, V>>[] newBuckets = (List<Entry<K, V>>[]) new ArrayList[newSize];
+            for (int i = 0; i < newBuckets.length; i++) {
+                //TODO реализовать логику разложения элементов в новый ArrayList
+                newBuckets[i].add(buckets[i].get(i));
+            }
+            return newBuckets;
+    }
+
+    private boolean checkSizeWithBucket(){
+        return size > (buckets.length * 0.75);
     }
 
     private static class Entry<K, V> {
