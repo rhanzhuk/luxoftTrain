@@ -4,9 +4,6 @@ import org.testng.annotations.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by dsk1 on 10/12/2018.
- */
 public class QueryGeneratorTest {
     @Test
     public void testGetAll() throws Exception {
@@ -14,9 +11,17 @@ public class QueryGeneratorTest {
         String actual = queryGenerator.getAll(Person.class);
         String expected = "SELECT person_id, person_name, salary FROM Persons;";
 
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testInsert() throws Exception {
+        QueryGenerator queryGenerator = new QueryGenerator();
+        Person person = new Person();
+        String actual = queryGenerator.insert(person);
+        String expected = "INSERT INTO Persons (person_id, person_name, salary) VALUES (person_id, person_name, salary);";
 
         assertEquals(expected, actual);
-
     }
 
     @Table(name = "Persons")
